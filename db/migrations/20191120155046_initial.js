@@ -17,7 +17,6 @@ exports.up = function(knex) {
       table.boolean('is_streamable');
 
       table.timestamps(true, true);
-
     })
     
   ])
@@ -25,8 +24,8 @@ exports.up = function(knex) {
 
 exports.down = function(knex) {
   return Promise.all([
-    knex.schema.dropTable('albums'),
-    knex.schema.dropTable('songs')
+    knex.schema.dropTable('songs'),
+    knex.schema.dropTable('albums')
   ])
   
 };
