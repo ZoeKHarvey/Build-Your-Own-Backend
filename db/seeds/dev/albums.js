@@ -1,29 +1,5 @@
 const albumsData = require('../../../data/albumsData')
-
-// exports.seed = function(knex) {
-//  return knex('songs').del()
-//   .then(() => knex('albums').del())
-//   .then(() => {
-//     return Promise.all([
-//       knex('albums').insert({
-//         album_id: 1, 
-//         collection_name: 'First Album',
-//         release_date: 'I am a date'
-//       }, 'id')
-//       .then(songID => {
-//         return knex('songs').insert([
-//           { album_id: 1,
-//             collection_name: 'A Song!',
-//             is_streamable: true
-//           }
-//         ])
-//       })
-//       .then(() => console.log('Seeding complete!'))
-//       .catch(error => console.log(`Error seeding data: ${error}`))
-//     ])
-//   })
-//   .catch(error => console.log(`Error seeding data: ${error}`))
-// };
+const songsData = require('../../../data/songsData')
 
 const createAlbum = (knex, album) => {
   return knex('albums').insert({
@@ -33,9 +9,22 @@ const createAlbum = (knex, album) => {
   })
 }
 
+const createSong = (knex, song) => {
+  return knex('songs').insert({
+    album_id: song.collectionId, 
+    collection_name: song.collectionName,
+    is_streamable: song.isStreamable
+  })
+}
 
 exports.seed = (knex) => {
   return knex('songs').del()
+    .then(() => {
+      let songPromises = [];
+      songsData.forEach(song => {
+        songPromises.push(createSong(knex, song))
+    })
+  })
     .then(() => knex('albums').del())
     .then(() => {
       let albumPromises = [];
@@ -46,4 +35,7 @@ exports.seed = (knex) => {
     })
     .catch(error => console.log(`Error seeding data: ${error}`))
 }
+
+
+
 
