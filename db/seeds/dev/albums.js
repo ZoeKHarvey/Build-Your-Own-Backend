@@ -23,7 +23,8 @@ exports.seed = (knex) => {
       let songPromises = [];
       songsData.forEach(song => {
         songPromises.push(createSong(knex, song))
-    })
+    });
+    return Promise.all(songPromises)
   })
     .then(() => knex('albums').del())
     .then(() => {
