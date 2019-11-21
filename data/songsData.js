@@ -102,3 +102,4 @@ let songs = [
   "previewUrl":"https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview128/v4/ec/12/ff/ec12ffa9-a737-88fc-f6a1-ae5ae503e7a5/mzaf_877210384086129575.plus.aac.p.m4a", "artworkUrl30":"https://is1-ssl.mzstatic.com/image/thumb/Music118/v4/69/73/56/697356a4-90eb-3964-70c4-5184791abdc3/source/30x30bb.jpg", "artworkUrl60":"https://is1-ssl.mzstatic.com/image/thumb/Music118/v4/69/73/56/697356a4-90eb-3964-70c4-5184791abdc3/source/60x60bb.jpg", "artworkUrl100":"https://is1-ssl.mzstatic.com/image/thumb/Music118/v4/69/73/56/697356a4-90eb-3964-70c4-5184791abdc3/source/100x100bb.jpg", "collectionPrice":9.99, "trackPrice":1.29, "releaseDate":"1974-10-16T12:00:00Z", "collectionExplicitness":"notExplicit", "trackExplicitness":"notExplicit", "discCount":1, "discNumber":1, "trackCount":10, "trackNumber":2, "trackTimeMillis":210835, "country":"USA", "currency":"USD", "primaryGenreName":"Rock", "isStreamable":true}
   ]
   
+  module.exports = songsData;
