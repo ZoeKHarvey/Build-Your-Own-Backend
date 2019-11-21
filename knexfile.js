@@ -6,7 +6,7 @@ module.exports = {
     client: 'pg',
     connection: 'postgres://localhost/stones',
     migrations: {
-      directory: './db/migrations'
+      directory: './db/migrations',
     },
     useNullAsDefault: true
   }
