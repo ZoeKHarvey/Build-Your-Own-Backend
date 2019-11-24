@@ -4,6 +4,7 @@ exports.up = function(knex) {
     knex.schema.createTable('albums', function(table) {
       table.increments('id').primary();
       table.integer('album_id');
+      table.unique('album_id');
       table.string('collection_name');
       table.string('release_date');
 
@@ -12,9 +13,10 @@ exports.up = function(knex) {
 
     knex.schema.createTable('songs', function(table) {
       table.increments('id').primary();
-      table.integer('album_id');
       table.string('collection_name');
       table.boolean('is_streamable');
+      table.integer('album_id').unsigned();
+      table.foreign('album_id').references('albums.album_id')
 
       table.timestamps(true, true);
     })
