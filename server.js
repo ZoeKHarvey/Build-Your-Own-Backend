@@ -13,7 +13,17 @@ app.get('/api/v1/albums', (request, response) => {
     response.status(200).json(albums)
   })
   .catch((error) => {
-    response.status(500).json({error})
+    response.status(500).json({ error })
+  })
+})
+
+app.get('/api/v1/songs', (request, response) => {
+  database('songs').select()
+  .then((songs) => {
+    response.status(200).json(songs);
+  })
+  .catch((error) => {
+    response.status(500).json({ error })
   })
 })
 
