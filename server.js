@@ -116,6 +116,22 @@ app.delete('/api/v1/songs/:id', (request, response) => {
   })
 })
 
+app.delete('/api/v1/albums/:id', (request, response) => {
+  database('albums').where('id', request.params.id).select().del()
+  .then(album => {
+    if(album) {
+      response.status(200).json(`album ${request.params.id} deleted`)
+    } else {
+      response.status(404).json({
+        error: `Couldn't find album with id: ${request.params.id}`
+      })
+    }
+  })
+  .catch(error => {
+    response.status(500).json({ error })
+  })
+})
+
 
 app.listen(app.get('port'), () => {
   console.log(`App is running on ${app.get('port')}`)
