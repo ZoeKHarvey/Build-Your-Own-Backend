@@ -100,6 +100,22 @@ app.post('/api/v1/albums', (request, response) => {
     })
 })
 
+app.delete('/api/v1/songs/:id', (request, response) => {
+  database('songs').where('id', request.params.id).select().del()
+  .then(song => {
+    if(song) {
+      response.status(200).json(`Song ${request.params.id} deleted`)
+    } else {
+      response.status(404).json({
+        error: `Couldn't find song with id: ${request.params.id}`
+      })
+    }
+  })
+  .catch(error => {
+    response.status(500).json({ error })
+  })
+})
+
 
 app.listen(app.get('port'), () => {
   console.log(`App is running on ${app.get('port')}`)
