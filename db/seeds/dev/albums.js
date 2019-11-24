@@ -11,7 +11,7 @@ const createAlbum = (knex, album) => {
 
 const createSong = (knex, song) => {
   return knex('songs').insert({
-    album_id: song.collectionId, 
+    // album_id: song.collectionId, 
     collection_name: song.collectionName,
     is_streamable: song.isStreamable
   })
