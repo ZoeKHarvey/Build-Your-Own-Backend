@@ -43,6 +43,22 @@ app.get('/api/v1/songs/:id', (request, response) => {
     })
 })
 
+app.get('/api/v1/albums/:id', (request, response) => {
+  database('albums').where('id', request.params.id).select()
+    .then(albums => {
+      if(albums.length) {
+        response.status(200).json(albums)
+      } else {
+        response.status(404).json({
+          error: `Could not find album with id: ${request.params.id}`
+        })
+      }
+    })
+    .catch(error => {
+      response.status(500).json({ error })
+    })
+})
+
 app.listen(app.get('port'), () => {
   console.log(`App is running on ${app.get('port')}`)
 })
