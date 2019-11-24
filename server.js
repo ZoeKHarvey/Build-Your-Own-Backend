@@ -1,20 +1,107 @@
 const express = require('express');
 const app = express();
+const bodyParser = require('body-parser')
 
 const environment = process.env.NODE_ENV || 'development';
 const configuration = require('./knexfile')[environment];
-console.log('configuration', configuration)
 const database = require('knex')(configuration)
-console.log('database', database)
 
 app.set('port', process.env.PORT || 3000);
 
-app.get('/api/v1/footnotes', (req, res) => {
-  database('footnotes').select().then(footnotes => {
-    res.status(200).json(footnotes)
+app.use(bodyParser.json())
+
+app.get('/api/v1/albums', (request, response) => {
+  database('albums').select()
+  .then((albums) => {
+    response.status(200).json(albums)
+  })
+  .catch((error) => {
+    response.status(500).json({ error })
   })
 })
+
+app.get('/api/v1/songs', (request, response) => {
+  database('songs').select()
+  .then((songs) => {
+    response.status(200).json(songs);
+  })
+  .catch((error) => {
+    response.status(500).json({ error })
+  })
+})
+
+app.get('/api/v1/songs/:id', (request, response) => {
+  database('songs').where('id', request.params.id).select()
+    .then(songs => {
+      if(songs.length) {
+        response.status(200).json(songs)
+      } else {
+        response.status(404).json({
+          error: `Could not find song with id: ${request.params.id}`
+        })
+      }
+    })
+    .catch(error => {
+      response.status(500).json({ error })
+    })
+})
+
+app.get('/api/v1/albums/:id', (request, response) => {
+  database('albums').where('id', request.params.id).select()
+    .then(albums => {
+      if(albums.length) {
+        response.status(200).json(albums)
+      } else {
+        response.status(404).json({
+          error: `Could not find album with id: ${request.params.id}`
+        })
+      }
+    })
+    .catch(error => {
+      response.status(500).json({ error })
+    })
+})
+
+app.post('/api/v1/songs', (request, response) => {
+  const song = request.body;
+  for (let requiredParameter of [collection_name, isStreamable]) {
+    if(!song[requiredParameter]) {
+      return response
+        .status(422)
+        .send({ error: `Expected format: { collectionName: <String>, isStreammable: <Boolean> }. You're missing a "${requiredParameter}" property.`});
+    }
+  }
+
+  database('songs').insert(song, 'id')
+    .then(song => {
+      response.status(201).json({ id: song[0] })
+    })
+    .catch(error => {
+      response.status(500).json({ error });
+    })
+})
+
+app.post('/api/v1/albums', (request, response) => {
+  const song = request.body;
+  for (let requiredParameter of [album_id, collection_name, release_date]) {
+    if(!album[requiredParameter]) {
+      return response
+        .status(422)
+        .send({ error: `Expected format: { collectionName: <String>, isStreammable: <Boolean> }. You're missing a "${requiredParameter}" property.`});
+    }
+  }
+
+  database('album').insert(album, 'id')
+    .then(album => {
+      response.status(201).json({ id: album[0] })
+    })
+    .catch(error => {
+      response.status(500).json({ error });
+    })
+})
+
 
 app.listen(app.get('port'), () => {
   console.log(`App is running on ${app.get('port')}`)
 })
+
