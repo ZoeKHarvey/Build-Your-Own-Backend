@@ -60,7 +60,7 @@ GET /api/v1/albums/:id
 | Name | Type | Description |
 |------|------|-------------|
 |id|integer| Unique identifier of the album|
-|album_id|Identifier that connects songs to albums|
+|album_id|integer|Identifier that connects songs to albums|
 |collection_name|string| Name of the album|
 |release_date|string| Album's release date|
 
@@ -103,7 +103,7 @@ POST /api/v1/albums
 | Name | Type | Description |
 |------|------|-------------|
 |id|integer| Unique identifier of the album|
-|album_id|Identifier that connects songs to albums|
+|album_id|integer|Identifier that connects songs to albums|
 |collection_name|string| Name of the album|
 |release_date|string| Album's release date|
 
@@ -152,7 +152,7 @@ DELETE /api/v1/albums/:id
 | Name | Type | Description |
 |------|------|-------------|
 |id|integer| Unique identifier of the album|
-|album_id|Identifier that connects songs to albums|
+|album_id|integer|Identifier that connects songs to albums|
 |collection_name|string| Name of the album|
 |release_date|string| Album's release date|
 
