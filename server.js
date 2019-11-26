@@ -8,6 +8,7 @@ const bodyParser = require('body-parser')
 //Tells our app what environment it's in, it's default will be 'development'
 const environment = process.env.NODE_ENV || 'development';
 // Configures knexfile based on given environment
+app.use(express.json());
 const configuration = require('./knexfile')[environment];
 // What knex uses to configure our database (based on environment)
 const database = require('knex')(configuration)
