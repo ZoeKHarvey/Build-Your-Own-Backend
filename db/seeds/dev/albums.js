@@ -9,33 +9,33 @@ const createAlbum = (knex, album) => {
     release_date: album.releaseDate
   })
 }
+  const createSong = (knex, song) => {
+    return knex('songs').insert({
+       // album_id: song.collectionId, 
+       collection_name: song.collectionName,
+       is_streamable: song.isStreamable
+    })
+ }
 
-const createSong = (knex, song) => {
-  return knex('songs').insert({
-    // album_id: song.collectionId, 
-    collection_name: song.collectionName,
-    is_streamable: song.isStreamable
-  })
-}
 
 exports.seed = (knex) => {
-  return knex('songs').del()
+  return knex('albums').del()
     .then(() => {
-      let songPromises = [];
-      songsData.forEach(song => {
-        songPromises.push(createSong(knex, song))
-    });
-    return Promise.all(songPromises)
-  })
-    .then(() => knex('albums').del())
-    .then(() => {
-      let albumPromises = [];
+      const albumsPromise = [];
       albumsData.forEach(album => {
-        albumPromises.push(createAlbum(knex, album))
+        albumsPromise.push(createAlbum(knex, album));
       });
-      return Promise.all(albumPromises);
+      return Promise.all(albumsPromise);
     })
-    .catch(error => console.log(`Error seeding data: ${error}`))
+    .then(() => knex('songs').del())
+    .then(() => {
+      const songsPromise = [];
+      songsData.forEach(song => {
+        songsPromise.push(createSong(knex, song));
+      });
+      return Promise.all(songsPromise);
+    })
+    .catch(error => console.log(`Error seeding data: ${error}`));
 }
 
 
